@@ -537,7 +537,7 @@ var Coord = function(containId) {
         } else {
             _Coord.tip.hide();
         }
-    }
+    };
     // 键盘切换状态
     window.addEventListener('keydown', function(event) {
         _Coord.state.pointMode = event.keyCode === 16; // shift
