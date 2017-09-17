@@ -1,0 +1,532 @@
+html,
+body {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  font-size: 50px;
+}
+
+body {
+  font-size: 12px;
+  background-color: #f0f0f0;
+}
+
+.none {
+  display: none !important;
+}
+
+.coord-menu {
+  position: fixed;
+  right: 20px;
+  z-index: 100;
+}
+
+.hide {
+  display: none !important;
+}
+
+.tip {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  display: none;
+  color: #FFF;
+  z-index: 10;
+}
+.tip.active {
+  display: block;
+}
+.tip span {
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 1em;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+}
+
+.coord-control {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  z-index: 100;
+}
+.coord-control .wrap {
+  margin-left: -50%;
+  white-space: nowrap;
+}
+.coord-control span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: #666;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 10px;
+  position: relative;
+  float: left;
+}
+.coord-control span:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: help;
+}
+.coord-control span:hover:before {
+  position: absolute;
+  content: attr(alt);
+  top: 100%;
+  border: 1px solid #444444;
+  background-color: #FFF;
+  margin-top: 4px;
+  padding: 3px;
+}
+.coord-control span.move {
+  background-image: url(../img/move.png);
+}
+.coord-control span.point {
+  background-image: url(../img/point.png);
+}
+.coord-control span.line {
+  background-image: url(../img/line.png);
+}
+.coord-control span.remove {
+  background-image: url(../img/remove.png);
+}
+
+.coord-elem {
+  width: 20px;
+  height: 20px;
+  background-image: url(../img/logo.png);
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  animation-duration: 2000ms;
+  animation-delay: 0ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 0 0;
+}
+.paused .coord-elem {
+  animation-play-state: paused;
+}
+
+.coord-reference-Y {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1px solid #FF0000;
+  border-bottom: 1px solid transparent !important;
+  cursor: ns-resize;
+  padding: 1px 0;
+}
+
+.coord-reference-X {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  border-left: 1px solid #FF0000;
+  border-right: 1px solid transparent !important;
+  padding: 0 1px;
+  cursor: ew-resize;
+}
+
+.coord-reference-tip {
+  position: absolute;
+  display: none;
+  margin-left: 10px;
+  margin-top: 10px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.coord-frame-of-reference {
+  box-sizing: border-box;
+  color: #cccccc;
+  display: box;
+  display: -webkit-box;
+}
+.coord-frame-of-reference .left {
+  width: 120px;
+  padding-right: 20px;
+}
+.coord-frame-of-reference .right {
+  box-flex: 1;
+  -webkit-box-flex: 1;
+}
+
+.coord {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.coord svg {
+  width: 100%;
+  height: 100%;
+}
+.coord line {
+  display: none;
+}
+.coord path {
+  display: none;
+}
+.coord .coord-point {
+  width: 9px;
+  height: 9px;
+  border: 1px solid #666;
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+  left: 0;
+  top: 0;
+  margin-left: -5px;
+  margin-top: -5px;
+  display: none;
+}
+.coord .coord-point:hover {
+  background-color: #CCC;
+}
+.coord .coord-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #666;
+  position: absolute;
+  z-index: 0;
+  background-color: #FFF;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  margin-left: -4px;
+  margin-top: -4px;
+  display: none;
+}
+.coord .coord-dot:hover {
+  background-color: #CCC;
+}
+.coord-mode-point .coord-point {
+  display: inherit;
+}
+.coord-mode-point path {
+  display: inherit;
+}
+.coord-mode-point span.point {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.coord-mode-point .coord-reference-X,
+.coord-mode-point .coord-reference-Y {
+  border-color: #ffc1c1;
+  z-index: -1;
+}
+.coord-mode-line .coord-dot {
+  z-index: 10;
+  display: inherit;
+}
+.coord-mode-line path {
+  display: inherit;
+}
+.coord-mode-line line {
+  display: inherit;
+}
+.coord-mode-line span.line {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.coord-mode-line .coord-reference-X,
+.coord-mode-line .coord-reference-Y {
+  border-color: #ffc1c1;
+  z-index: -1;
+}
+.coord-mode-remove .coord-point {
+  display: inherit;
+}
+.coord-mode-remove .coord-dot {
+  display: inherit;
+}
+.coord-mode-remove path {
+  display: inherit;
+}
+.coord-mode-remove line {
+  display: inherit;
+}
+.coord-mode-remove span.remove {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.coord-mode-remove .coord-reference-X,
+.coord-mode-remove .coord-reference-Y {
+  border-color: #ffc1c1;
+  z-index: -1;
+}
+.coord-mode-transform {
+  cursor: move;
+  cursor: -webkit-grab;
+}
+.coord-mode-transform .coord-point {
+  display: inherit;
+}
+.coord-mode-transform path {
+  display: inherit;
+}
+.coord-mode-transform span.move {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.coord-mode-transform .coord-reference-X,
+.coord-mode-transform .coord-reference-Y {
+  border-color: #ffc1c1;
+  z-index: -1;
+}
+
+.coord-paths-option {
+  width: 340px;
+  color: #CCC;
+  white-space: nowrap;
+}
+.coord-paths-option:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.coord-paths-option ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  background-color: #444444;
+}
+.coord-paths-option li {
+  display: box;
+  display: -webkit-box;
+  line-height: 30px;
+  padding: 4px 0;
+  box-align: center;
+  -webkit-box-align: center;
+}
+.coord-paths-option li img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin: 0 6px;
+}
+.coord-paths-option li input {
+  border: none;
+  outline: none;
+  height: 30px;
+}
+.coord-paths-option li .name {
+  box-flex: 1;
+  -webkit-box-flex: 1;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+.coord-paths-option li .remove {
+  display: inline-block;
+  text-align: center;
+  width: 30px;
+}
+.coord-paths-option li.active {
+  background-color: #222;
+}
+.coord-paths-option .btn {
+  background-color: #408eba;
+  color: #FFF;
+  text-align: center;
+  width: 60px;
+  margin: 6px auto;
+}
+
+.tab span {
+  text-align: center;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 3px 20px;
+}
+.tab span.active {
+  background-color: #444444;
+}
+.tab em {
+  display: none;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.tab-content {
+  display: none;
+  background-color: #444444;
+  padding: 10px;
+}
+.tab-content.active {
+  display: block;
+}
+
+.motion-wrap .motion-box {
+  position: relative;
+  padding: 40px 60px;
+  box-sizing: border-box;
+  background-color: #545454;
+  margin-bottom: 10px;
+}
+.motion-wrap .motion-box .motion-svg {
+  position: absolute;
+  z-index: 1;
+  left: 60px;
+  top: 40px;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}
+.motion-wrap .motion-box svg {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: visible;
+}
+.motion-wrap .motion-point {
+  cursor: move;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+  margin-left: -12px;
+  margin-top: -12px;
+  border-radius: 50%;
+  background-color: #999;
+  border: 4px solid #333;
+}
+.motion-wrap .motion-point.active {
+  z-index: 3;
+}
+.motion-wrap .motion-line {
+  position: absolute;
+  background-color: #828282;
+}
+
+.coord-dialog {
+  border-top: 6px solid #000;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #cccccc;
+  font-size: 12px;
+}
+
+.coord-option {
+  display: none;
+  width: 340px;
+}
+.coord-option.active {
+  display: block;
+}
+.coord-option textarea.export-css {
+  height: 100px;
+}
+
+.row {
+  display: block;
+  margin-bottom: 10px;
+}
+.row span {
+  display: block;
+  margin-bottom: 4px;
+}
+.row input[type="text"],
+.row input[type="number"],
+.row select,
+.row textarea {
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  padding: 0 6px;
+  font-size: 12px;
+  box-sizing: border-box;
+  color: #cccccc;
+  margin: 0;
+  outline: none;
+  line-height: 26px;
+  height: 26px;
+  background-color: #555;
+  -webkit-appearance: none;
+  resize: none;
+}
+
+.col {
+  line-height: 26px;
+  display: -webkit-box;
+  margin-bottom: 10px;
+}
+.col label {
+  display: block;
+  padding-right: 6px;
+  padding-left: 12px;
+  text-align: right;
+  -webkit-box-flex: 1;
+}
+.col input {
+  display: block;
+  width: 50px;
+  border: none;
+  border-radius: 3px;
+  height: 26px;
+  padding: 0 6px;
+  font-size: 12px;
+  box-sizing: border-box;
+  color: #cccccc;
+  margin: 0;
+  outline: none;
+  color: #cccccc;
+  background-color: #555;
+  -webkit-appearance: none;
+  resize: none;
+}
+
+.label {
+  margin-bottom: 6px;
+}
+
+#imgWrap {
+  min-height: 100px;
+}
+
+#imgSrc {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+  margin: auto;
+}
+
+#FORSrc {
+  display: block;
+  margin: auto;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+#imgBtn,
+#FORBtn {
+  display: block;
+  width: 120px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  margin: auto;
+  border: 1px solid #777;
+  margin-top: 20px;
+}
+#imgBtn:active,
+#FORBtn:active {
+  background-color: #666;
+}
+
+#imgInput,
+#FORInput {
+  display: none;
+}

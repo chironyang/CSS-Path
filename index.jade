@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+html
+    head
+    meta(charset="UTF-8")
+    link(rel="stylesheet" type="text/css" href="css/index.css")
+    title CSS 路径动画工具
+body
+    .coord-control
+        .wrap
+            span.point(alt="锚点模式（快捷键-shift)")
+            span.line(alt="操控点模式（快捷键-alt)")
+            span.move(alt="移动模式（快捷键-space）")
+            span.remove(alt="移除（快捷键-r）")
+
+    .coord-menu
+        //参考系
+        .coord-dialog#coord-option
+            .tab
+                span.active(target="Background") 参考背景
+                    em Background
+                span(target="Print") 输出
+                    em Print
+            .tab-content.active(frame="Background")
+                .coord-frame-of-reference
+                    .left
+                        label.row
+                            span 宽（px）
+                            input#forWidth(type="number")
+                        label.row
+                            span 高（px）
+                            input#forHeight(type="number")
+                    .right
+                        img#FORSrc
+                        #FORBtn 上传参考背景
+                        input#FORInput(type="file")
+            .tab-content(frame="Print")
+                .row
+                    .label 输出标准
+                    label
+                        input(type="checkbox",name="standard",value="w3c",checked,disabled)
+                        |W3C
+                    label
+                        input(type="checkbox",name="standard",value="webkit",checked,disabled)
+                        |Webkit
+        .coord-dialog.coord-paths-option
+            ul#pathlist
+                li
+                    .btn#addpath 添加
+        .coord-dialog.coord-option#coord-path-option
+            .tab
+                span.active(target="Path") 路径
+                    em Path
+                span(target="Image") 图像
+                    em Image
+                span(target="Motion") 效果
+                    em Motion
+                span(target="Export") 输出
+                    em Export
+            //路径
+            .tab-content.active(frame="Path")
+                label.row
+                    span 样式名
+                    input(type="text",name="className")
+                label.row
+                    span 循环次数
+                    input(type="text",name="iterationCount")
+                label.row
+                    span 动画时长（ms）
+                    input(type="number",name="duration")
+                label.row
+                    span 延迟（ms)
+                    input(type="text",name="delay")
+                .row
+                    label
+                        input(type="checkbox",name="alignCenter")
+                        |内容居中
+                .row
+                    label
+                        input(type="checkbox",name="direction")
+                        |反向
+            //图像
+            .tab-content(frame="Image")
+                .row
+                    img#imgSrc(type="image",name="image")
+                    #imgBtn 点击上传图片
+                    input#imgInput(type="file")
+            //Export
+            .tab-content(frame="Export")
+                .row
+                    .label 输出单位
+                    label
+                        input(type="radio",name="unit",value="px")
+                        |px
+                    label
+                        input(type="radio",name="unit",value="rem")
+                        |rem
+                    label
+                        input(type="radio",name="unit",value="percentage",disabled)
+                        |%
+                .row
+                    .label 输出
+                    textarea.export-css#exportCss
+            .tab-content.motion-wrap(frame="Motion")
+                .row
+                    .label Time-Function
+                    select#timingFunction(name="timingFunction")
+                        option(value="linear",p="0,0,1,1") linear
+                        option(value="ease",p="0.25,0.1,0.25,1") ease
+                        option(value="ease-in",p="0.42,0,1,1") ease-in
+                        option(value="ease-out",p="0,0,0.58,1") ease-out
+                        option(value="ease-in-out",p="0.42,0,0.58,1") ease-in-out
+                        option(value="cubic-bezier") cubic-bezier
+                .motion-wrap
+                    .motion-box#motionBox
+                        .motion-svg#motionSvg
+                            .motion-point#motionPoint0(style="left:0%;top:0%;")
+                            .motion-point#motionPoint1(style="left:100%;top:100%;")
+                        svg
+                            path#motionPath(stroke="#c8c8c8",stroke-width="2",fill="none",d="M0 0C0 0,200 200,200 200")
+                            line#motionLine1(stroke="#CCC",stroke-width="1",stroke-dasharray="3",fill="none",x1="0",y1="0",x2="0",y2="0")
+                            line#motionLine2(stroke="#CCC",stroke-width="1",stroke-dasharray="3",fill="none",x1="200",y1="200",x2="200",y2="200")
+                    .col
+                        label x0
+                        input#motionP0x(type="num" name="motion_p0x" value="0")
+                        label y0
+                        input#motionP0y(type="num" name="motion_p0y" value="0")
+                        label y1
+                        input#motionP1x(type="num" name="motion_p1x" value="1")
+                        label y1
+                        input#motionP1y(type="num" name="motion_p1y" value="1")
+
+    #svg.coord
+    script(src="js/jquery.min.js")
+    script(src="js/path.min.js")
+    script(src="js/index.min.js")
