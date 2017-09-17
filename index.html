@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="css/index.css"/>
+  <title>CSS 路径动画工具</title>
+</html>
+<body>
+  <div class="coord-control">
+    <div class="wrap"><span alt="锚点模式（快捷键-shift)" class="point"></span><span alt="操控点模式（快捷键-alt)" class="line"></span><span alt="移动模式（快捷键-space）" class="move"></span><span alt="移除（快捷键-r）" class="remove"></span></div>
+  </div>
+  <div class="coord-menu">
+    <!--参考系-->
+    <div id="coord-option" class="coord-dialog">
+      <div class="tab"><span target="Background" class="active">参考背景<em>Background</em></span><span target="Print">输出<em>Print</em></span></div>
+      <div frame="Background" class="tab-content active">
+        <div class="coord-frame-of-reference">
+          <div class="left">
+            <label class="row"><span>宽（px）</span>
+              <input id="forWidth" type="number"/>
+            </label>
+            <label class="row"><span>高（px）</span>
+              <input id="forHeight" type="number"/>
+            </label>
+          </div>
+          <div class="right"><img id="FORSrc"/>
+            <div id="FORBtn">上传参考背景</div>
+            <input id="FORInput" type="file"/>
+          </div>
+        </div>
+      </div>
+      <div frame="Print" class="tab-content">
+        <div class="row">
+          <div class="label">输出标准</div>
+          <label>
+            <input type="checkbox" name="standard" value="w3c" checked="checked" disabled="disabled"/>W3C
+          </label>
+          <label>
+            <input type="checkbox" name="standard" value="webkit" checked="checked" disabled="disabled"/>Webkit
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="coord-dialog coord-paths-option">
+      <ul id="pathlist">
+        <li>
+          <div id="addpath" class="btn">添加</div>
+        </li>
+      </ul>
+    </div>
+    <div id="coord-path-option" class="coord-dialog coord-option">
+      <div class="tab"><span target="Path" class="active">路径<em>Path</em></span><span target="Image">图像<em>Image</em></span><span target="Motion">效果<em>Motion</em></span><span target="Export">输出<em>Export</em></span></div>
+      <!--路径-->
+      <div frame="Path" class="tab-content active">
+        <label class="row"><span>样式名</span>
+          <input type="text" name="className"/>
+        </label>
+        <label class="row"><span>循环次数</span>
+          <input type="text" name="iterationCount"/>
+        </label>
+        <label class="row"><span>动画时长（ms）</span>
+          <input type="number" name="duration"/>
+        </label>
+        <label class="row"><span>延迟（ms)</span>
+          <input type="text" name="delay"/>
+        </label>
+        <div class="row">
+          <label>
+            <input type="checkbox" name="alignCenter"/>内容居中
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <input type="checkbox" name="direction"/>反向
+          </label>
+        </div>
+      </div>
+      <!--图像-->
+      <div frame="Image" class="tab-content">
+        <div class="row"><img id="imgSrc" type="image" name="image"/>
+          <div id="imgBtn">点击上传图片</div>
+          <input id="imgInput" type="file"/>
+        </div>
+      </div>
+      <!--Export-->
+      <div frame="Export" class="tab-content">
+        <div class="row">
+          <div class="label">输出单位</div>
+          <label>
+            <input type="radio" name="unit" value="px"/>px
+          </label>
+          <label>
+            <input type="radio" name="unit" value="rem"/>rem
+          </label>
+          <label>
+            <input type="radio" name="unit" value="percentage" disabled="disabled"/>%
+          </label>
+        </div>
+        <div class="row">
+          <div class="label">输出</div>
+          <textarea id="exportCss" class="export-css"></textarea>
+        </div>
+      </div>
+      <div frame="Motion" class="tab-content motion-wrap">
+        <div class="row">
+          <div class="label">Time-Function</div>
+          <select id="timingFunction" name="timingFunction">
+            <option value="linear" p="0,0,1,1">linear</option>
+            <option value="ease" p="0.25,0.1,0.25,1">ease</option>
+            <option value="ease-in" p="0.42,0,1,1">ease-in</option>
+            <option value="ease-out" p="0,0,0.58,1">ease-out</option>
+            <option value="ease-in-out" p="0.42,0,0.58,1">ease-in-out</option>
+            <option value="cubic-bezier">cubic-bezier</option>
+          </select>
+        </div>
+        <div class="motion-wrap">
+          <div id="motionBox" class="motion-box">
+            <div id="motionSvg" class="motion-svg">
+              <div id="motionPoint0" style="left:0%;top:0%;" class="motion-point"></div>
+              <div id="motionPoint1" style="left:100%;top:100%;" class="motion-point"></div>
+            </div>
+            <svg>
+              <path id="motionPath" stroke="#c8c8c8" stroke-width="2" fill="none" d="M0 0C0 0,200 200,200 200"></path>
+              <line id="motionLine1" stroke="#CCC" stroke-width="1" stroke-dasharray="3" fill="none" x1="0" y1="0" x2="0" y2="0"></line>
+              <line id="motionLine2" stroke="#CCC" stroke-width="1" stroke-dasharray="3" fill="none" x1="200" y1="200" x2="200" y2="200"></line>
+            </svg>
+          </div>
+          <div class="col">
+            <label>x0</label>
+            <input id="motionP0x" type="num" name="motion_p0x" value="0"/>
+            <label>y0</label>
+            <input id="motionP0y" type="num" name="motion_p0y" value="0"/>
+            <label>y1</label>
+            <input id="motionP1x" type="num" name="motion_p1x" value="1"/>
+            <label>y1</label>
+            <input id="motionP1y" type="num" name="motion_p1y" value="1"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="svg" class="coord"></div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/path.min.js"></script>
+  <script src="js/index.min.js"></script>
+</body>
