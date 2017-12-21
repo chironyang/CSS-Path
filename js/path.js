@@ -76,7 +76,7 @@ function removeClass(elem, className) {
 
 function outputCSS(points, option) {
     option = option || {};
-    var l = option.pointsCount || 80, // 帧数
+    var l = option.pointsCount || (option.duration * .07), // 帧数
         index = 0, //当前锚点
         per = 0, // 点百分比
         pes = 0, // 
@@ -85,6 +85,7 @@ function outputCSS(points, option) {
         dl,
         pathLength = 0,
         txt = '';
+        console.log(l)
     while (index <= l) {
         per = index / l; // 帧
         // 根据时间函数，调整贝塞尔或直线
@@ -310,7 +311,7 @@ var Coord = function(containId) {
                     this.option.className, // 类名
                     this.option.duration + 'ms', // 持续时间
                     // 'linear', // 速度曲线
-                    'steps(' + this.option.pointsCount + ')',
+                    'steps(1)',
                     this.option.delay + 'ms', // 延迟时间
                     this.option.iterationCount, // 播放次数
                     this.option.direction ? 'alternate' : "normal" // 反向
@@ -355,7 +356,6 @@ var Coord = function(containId) {
 
             // 值关联转换
             (!opt || opt.className !== undefined) && (this.element["className"] = 'coord-elem ' + this.option.className);
-            (!opt || opt.pointsCount !== undefined) && (this.option["pointsCount"] = this.option.duration / 25);
         };
         this.setImage = function(src, width, height) {
             this.element.style.backgroundImage = 'url(' + src + ')';
